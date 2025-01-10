@@ -45,3 +45,18 @@ function loop_size(Node $n): int {
     // Return the size of the loop by subtracting the index of the node where the loop starts from the total number of nodes
     return count($a) - array_search($n, $a, true);
   }
+
+    function loop_size(Node $n): int {
+      // Use object IDs as array keys for O(1) lookup
+      $visited = [];
+      $position = 0;
+      
+      // Traverse the linked list until we reach a node that has already been visited
+      while (!isset($visited[spl_object_id($n)])) {
+          $visited[spl_object_id($n)] = $position++;
+          $n = $n->getNext();
+      }
+      
+      // Return the size of the loop by subtracting the position of the node where the loop starts from the total number of nodes
+      return $position - $visited[spl_object_id($n)];
+  }
