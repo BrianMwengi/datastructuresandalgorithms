@@ -31,3 +31,17 @@ function loop_size(Node $node): int {
     // Return the size of the loop
     return $count;
 }
+
+function loop_size(Node $n): int {
+    // Declare an empty array to store visited nodes
+    $a = [];
+    // Loop through the linked list until we find a node that has already been visited
+    while (!in_array($n, $a, true)) {
+    // Add the current node to the array
+      array_push($a, $n);
+    // Move to the next node
+      $n = $n->getNext();
+    }
+    // Return the size of the loop by subtracting the index of the node where the loop starts from the total number of nodes
+    return count($a) - array_search($n, $a, true);
+  }
